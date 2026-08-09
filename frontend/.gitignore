@@ -1,0 +1,29 @@
+# Python cache and environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+/frontend/.env
+/frontend/.env.example
+/backend/.env.example
+/backend/.env
+**/.env
+**/.env.example
+**/__pycache__/
+**/__init__.py[cod]
+**/__init__.pyc
+/frontend/.sreamlit/*
+# Streamlit and local settings
+.streamlit/secrets.toml
+.env
+
+# Build/runtime artifacts
+dist/
+logs/
+*.log
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store

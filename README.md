@@ -2,31 +2,29 @@
 
 InsightForge is an enterprise-grade, multi-agent support platform.
 
-This repository is being built iteratively to keep each phase production-ready and testable before moving on.
+This repository is split into dedicated frontend and backend folders.
 
-## Phase Roadmap
+## Repository Layout
 
-1. Project structure
-2. Database
-3. Backend
-4. Frontend
-5. Agents
-6. Salesforce integration
-7. Metabase
-8. Authentication
-9. Docker
-10. Kubernetes
-11. CI/CD
+- `backend/` Python FastAPI backend, workers, integrations, tests, and deployment assets.
+- `frontend/` Streamlit frontend workspace for the operator UI and assistant interactions.
+- `.github/workflows/` CI/CD pipelines at repository root.
 
-## Current Phase
+## Backend Structure
 
-Phase 1 establishes the repository layout and baseline conventions. Implementation begins in the next phase.
+- `backend/app/` backend application source.
+- `backend/docs/` backend architecture and operational documentation.
+- `backend/docker/` backend container assets and local compose support.
+- `backend/kubernetes/` backend deployment manifests.
+- `backend/tests/` backend automated tests.
 
-## Core Layout
+## Running Backend Locally
 
-- `app/` backend application root
-- `docs/` architecture and operational documentation
-- `docker/` container assets and local compose support
-- `kubernetes/` production deployment manifests
-- `tests/` automated test suite
-- `.github/workflows/` CI/CD pipelines
+1. Change directory into `backend`.
+2. Install dependencies from `requirements.txt`.
+3. Run `python run_dev.py`.
+
+## Running Frontend Locally
+
+1. Install frontend dependencies from `frontend/requirements.txt`.
+2. Run `streamlit run frontend/streamlit_app.py` from the repository root.

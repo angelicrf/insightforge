@@ -18,6 +18,10 @@ coverage/
 .env
 .env.*
 !.env.example
+backend/.salesforce_token.json
+backend/.salesforce_pkce_cache.json
+frontend/.sreamlit/secrets.toml
+backend/certs/*.key
 
 # IDE and OS
 .DS_Store

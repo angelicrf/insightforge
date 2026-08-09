@@ -1,11 +1,11 @@
 """Controller for user-related API operations."""
 
+
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import List
 
 from app.api.schemas.user import UserCreate
-from app.services.user_service import user_service
 from app.models.user import User
+from app.services.user_service import user_service
 
 
 class UserController:
@@ -15,7 +15,7 @@ class UserController:
         """Handles the business logic of creating a user via the user service."""
         return await user_service.create_user(db=db, user_in=user_in)
 
-    async def get_all_users(self, db: AsyncSession, skip: int, limit: int) -> List[User]:
+    async def get_all_users(self, db: AsyncSession, skip: int, limit: int) -> list[User]:
         """Handles the business logic of retrieving all users via the user service."""
         return await user_service.get_all_users(db=db, skip=skip, limit=limit)
 

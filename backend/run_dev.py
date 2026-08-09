@@ -5,9 +5,9 @@ import asyncio
 import json
 import os
 import secrets
+import webbrowser
 from datetime import datetime, timezone
 from urllib.parse import quote_plus
-import webbrowser
 
 import httpx
 import uvicorn

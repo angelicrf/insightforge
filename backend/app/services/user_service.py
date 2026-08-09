@@ -1,15 +1,14 @@
 """Service layer for user-related business logic."""
 
+
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import List, Optional
 
 from app.api.schemas.user import UserCreate
-from app.models.user import User, Role
+from app.models.user import User
 from app.repositories.role_repository import role_repository
 from app.repositories.user_repository import user_repository
 from app.security import password as password_service
-from app.security import token as token_service
 
 
 class UserService:
@@ -50,7 +49,7 @@ class UserService:
         await db.refresh(db_user)
         return db_user
 
-    async def authenticate_user(self, db: AsyncSession, email: str, password: str) -> Optional[User]:
+    async def authenticate_user(self, db: AsyncSession, email: str, password: str) -> User | None:
         """
         Authenticates a user by email and password.
         """
@@ -59,7 +58,7 @@ class UserService:
             return None
         return user
 
-    async def get_all_users(self, db: AsyncSession, skip: int = 0, limit: int = 100) -> List[User]:
+    async def get_all_users(self, db: AsyncSession, skip: int = 0, limit: int = 100) -> list[User]:
         """
         Retrieves a list of users with pagination.
         """

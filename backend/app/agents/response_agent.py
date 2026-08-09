@@ -1,6 +1,7 @@
 """The Response Agent: For drafting communications to the customer."""
 
 from typing import Any
+
 from .base_agent import BaseAgent
 from .shared_context import SharedContext
 

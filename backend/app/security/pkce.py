@@ -3,10 +3,9 @@
 import base64
 import hashlib
 import secrets
-from typing import Tuple
 
 
-def generate_pkce_challenge() -> Tuple[str, str]:
+def generate_pkce_challenge() -> tuple[str, str]:
     """
     Generates a PKCE code verifier and a corresponding code challenge.
 

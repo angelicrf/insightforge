@@ -2,7 +2,7 @@
 
 import json
 import os
-from typing import Any, Dict
+from typing import Any
 
 import httpx
 import structlog
@@ -30,10 +30,10 @@ class SalesforceTool:
                     self.instance_url = token_data.get("instance_url")
                     if self.access_token and self.instance_url:
                         log.info("Salesforce client initialized with cached token.")
-            except (IOError, json.JSONDecodeError) as e:
+            except (OSError, json.JSONDecodeError) as e:
                 log.error("Failed to load cached Salesforce token.", error=str(e))
 
-    async def get_case_details(self, case_id: str) -> Dict[str, Any]:
+    async def get_case_details(self, case_id: str) -> dict[str, Any]:
         """Retrieves details for a specific Salesforce Case using the cached token."""
         if not self.access_token or not self.instance_url:
             log.warning("Salesforce token not available. Returning mock data.")
@@ -48,7 +48,7 @@ class SalesforceTool:
         response.raise_for_status()  # Raise an exception for 4xx/5xx responses
         return response.json()
 
-    async def query_pardot_custom_fields(self) -> Dict[str, Any]:
+    async def query_pardot_custom_fields(self) -> dict[str, Any]:
         """Queries the Pardot API for custom fields."""
         if not self.access_token:
             log.warning("Salesforce/Pardot token not available. Cannot query custom fields.")

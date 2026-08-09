@@ -1,6 +1,5 @@
 """Application configuration management."""
 
-from typing import List, Optional
 
 from pydantic import AnyHttpUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -15,7 +14,7 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
 
     # A list of trusted origins for CORS. e.g., ["http://localhost:3000"]
-    BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
+    BACKEND_CORS_ORIGINS: list[AnyHttpUrl] = []
 
     # Database settings
     POSTGRES_SERVER: str = "localhost"
@@ -23,15 +22,15 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str = "postgres"
     POSTGRES_DB: str = "insightforge"
 
-    SALESFORCE_CLIENT_ID: Optional[str] = None
-    SALESFORCE_CLIENT_SECRET: Optional[str] = None
-    SALESFORCE_REDIRECT_URI: Optional[AnyHttpUrl] = None
+    SALESFORCE_CLIENT_ID: str | None = None
+    SALESFORCE_CLIENT_SECRET: str | None = None
+    SALESFORCE_REDIRECT_URI: AnyHttpUrl | None = None
     SALESFORCE_LOGIN_URL: str = "https://login.salesforce.com"
     SALESFORCE_TOKEN_FILE: str = ".salesforce_token.json"
     SALESFORCE_PKCE_CACHE_FILE: str = ".salesforce_pkce_cache.json"
-    PARDOT_BUSINESS_UNIT_ID: Optional[str] = None
+    PARDOT_BUSINESS_UNIT_ID: str | None = None
     OLLAMA_BASE_URL: str = "http://localhost:11434"
-    OPENAI_API_KEY: Optional[str] = None
+    OPENAI_API_KEY: str | None = None
 
     model_config = SettingsConfigDict(
         env_file=(".env", ".env.example"),

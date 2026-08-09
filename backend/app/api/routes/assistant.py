@@ -9,7 +9,7 @@ router = APIRouter()
 
 @router.post("/query")
 async def assistant_query(
-    audio_file: UploadFile = File(..., description="Recorded operator audio as WAV/MP3."),
+    audio_file: UploadFile = File(..., description="Recorded operator audio as WAV/MP3."),  # noqa: B008
     user_query_text: str | None = Form(default=None),
 ) -> dict:
     """Accept operator audio and return a frontend-compatible assistant response."""

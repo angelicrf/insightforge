@@ -2,15 +2,15 @@
 
 from typing import Any
 
+import httpx
 import structlog
 
+from ..tools.neondb_client import NeonDBTool
+from ..tools.salesforce_client import SalesforceTool
 from .base_agent import BaseAgent
 from .shared_context import SharedContext
 from .tool_selection_agent import ToolSelectionAgent
 from .voice_to_text_agent import VoiceToTextAgent
-from ..tools.neondb_client import NeonDBTool
-from ..tools.salesforce_client import SalesforceTool
-
 
 log = structlog.get_logger()
 
@@ -57,7 +57,7 @@ class SupervisorAgent(BaseAgent):
             else:
                 log.warning("Unknown tool specified", tool_name=tool_name)
                 context.tool_output = {"error": f"Unknown tool: {tool_name}"}
-        except Exception as e:
+        except (AttributeError, TypeError, ValueError, OSError, httpx.HTTPError) as e:
             log.error("Error executing tool", error=str(e))
             context.tool_output = {"error": str(e)}
 

@@ -1,6 +1,7 @@
 """The Knowledge Agent: For retrieving relevant information."""
 
 from typing import Any
+
 from .base_agent import BaseAgent
 from .shared_context import SharedContext
 

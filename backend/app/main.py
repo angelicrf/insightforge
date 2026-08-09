@@ -1,8 +1,8 @@
 """Main application entrypoint for the InsightForge API."""
 
+import structlog
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import structlog
 
 from app.api.router import api_router
 from app.config.settings import settings

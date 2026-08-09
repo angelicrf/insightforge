@@ -1,6 +1,6 @@
 """Base repository primitive used by concrete repositories."""
 
-from typing import Any, Generic, List, Optional, TypeVar
+from typing import Any, Generic, TypeVar
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -16,7 +16,7 @@ class BaseRepository(Generic[ModelT]):
     def __init__(self, model: type[ModelT]) -> None:
         self.model = model
 
-    async def get(self, db: AsyncSession, id: Any) -> Optional[ModelT]:
+    async def get(self, db: AsyncSession, id: Any) -> ModelT | None:
         """Retrieve a single object by its primary key."""
         statement = select(self.model).where(self.model.id == id)
         result = await db.execute(statement)
@@ -24,7 +24,7 @@ class BaseRepository(Generic[ModelT]):
 
     async def get_multi(
         self, db: AsyncSession, *, skip: int = 0, limit: int = 100
-    ) -> List[ModelT]:
+    ) -> list[ModelT]:
         """Retrieve multiple objects with pagination."""
         statement = select(self.model).offset(skip).limit(limit)
         result = await db.execute(statement)

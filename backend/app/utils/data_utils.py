@@ -1,8 +1,9 @@
 """General data transformation helpers."""
 
-from typing import Any, Generator, List
+from collections.abc import Generator
+from typing import Any
 
 
-def chunk_list(items: List[Any], size: int) -> Generator[List[Any], None, None]:
+def chunk_list(items: list[Any], size: int) -> Generator[list[Any], None, None]:
     for i in range(0, len(items), size):
         yield items[i : i + size]

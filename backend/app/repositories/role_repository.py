@@ -1,6 +1,5 @@
 """Repository for Role model."""
 
-from typing import Optional
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -15,7 +14,7 @@ class RoleRepository(BaseRepository[Role]):
     def __init__(self) -> None:
         super().__init__(Role)
 
-    async def get_by_name(self, db: AsyncSession, *, name: RoleEnum) -> Optional[Role]:
+    async def get_by_name(self, db: AsyncSession, *, name: RoleEnum) -> Role | None:
         """Retrieve a role by its enum name."""
         statement = select(self.model).where(self.model.name == name)
         result = await db.execute(statement)

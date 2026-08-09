@@ -1,6 +1,6 @@
 """Defines the shared data structure passed between agents."""
 
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -23,7 +23,7 @@ class ToolCall(BaseModel):
     """Represents a decision to call a specific tool function."""
     tool_name: str
     function_name: str
-    args: Dict[str, Any] = Field(default_factory=dict)
+    args: dict[str, Any] = Field(default_factory=dict)
 
 
 class SharedContext(BaseModel):
@@ -33,17 +33,17 @@ class SharedContext(BaseModel):
     information as the workflow progresses.
     """
     # --- Input Fields ---
-    user_query_audio: Optional[bytes] = None
-    user_query_text: Optional[str] = None
+    user_query_audio: bytes | None = None
+    user_query_text: str | None = None
 
     # --- Existing Ticket Ingestion Fields ---
-    ticket: Optional[TicketContext] = None
-    customer: Optional[CustomerContext] = None
+    ticket: TicketContext | None = None
+    customer: CustomerContext | None = None
 
     # --- Agent-Populated Fields ---
-    language: Optional[str] = None
-    classification: Optional[Dict[str, Any]] = None
-    tool_call: Optional[ToolCall] = None
-    tool_output: Optional[Any] = None
-    suggested_response: Optional[str] = None
-    internal_notes: List[str] = Field(default_factory=list)
+    language: str | None = None
+    classification: dict[str, Any] | None = None
+    tool_call: ToolCall | None = None
+    tool_output: Any | None = None
+    suggested_response: str | None = None
+    internal_notes: list[str] = Field(default_factory=list)

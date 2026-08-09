@@ -1,6 +1,5 @@
 """Auth dependencies and role guards."""
 
-from typing import List
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -16,7 +15,7 @@ reusable_oauth2 = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_STR}/auth/log
 
 
 async def get_current_user(
-    db: AsyncSession = Depends(get_db), token: str = Depends(reusable_oauth2)
+    db: AsyncSession = Depends(get_db), token: str = Depends(reusable_oauth2)  # noqa: B008
 ) -> User:
     """
     Dependency to get the current user from a JWT token.
@@ -37,7 +36,7 @@ async def get_current_user(
 
 
 async def get_current_active_user(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),  # noqa: B008
 ) -> User:
     """
     Dependency to get the current active user. Raises an error if user is inactive.
@@ -47,10 +46,10 @@ async def get_current_active_user(
     return current_user
 
 
-def require_roles(required_roles: List[RoleEnum]):
+def require_roles(required_roles: list[RoleEnum]):
     """Dependency factory to require specific user roles for an endpoint."""
 
-    def role_checker(current_user: User = Depends(get_current_active_user)) -> User:
+    def role_checker(current_user: User = Depends(get_current_active_user)) -> User:  # noqa: B008
         if current_user.role.name not in required_roles:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,

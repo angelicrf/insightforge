@@ -1,5 +1,7 @@
 """The SQL Agent: For generating read-only SQL queries."""
 
+from typing import Any
+
 from .base_agent import BaseAgent
 from .shared_context import SharedContext
 

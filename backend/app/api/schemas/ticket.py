@@ -1,6 +1,5 @@
 """Pydantic schemas for Ticket and Customer data transfer."""
 
-from typing import Optional
 
 from pydantic import BaseModel, EmailStr
 
@@ -12,8 +11,8 @@ from app.models.ticket import TicketPriority, TicketStatus
 class CustomerBase(BaseModel):
     name: str
     email: EmailStr
-    company: Optional[str] = None
-    country: Optional[str] = None
+    company: str | None = None
+    country: str | None = None
 
 
 class CustomerCreate(CustomerBase):
@@ -29,7 +28,7 @@ class TicketBase(BaseModel):
     description: str
     status: TicketStatus = TicketStatus.OPEN
     priority: TicketPriority = TicketPriority.MEDIUM
-    category: Optional[str] = None
+    category: str | None = None
 
 
 class TicketCreate(TicketBase):
@@ -37,12 +36,12 @@ class TicketCreate(TicketBase):
 
 
 class TicketUpdate(BaseModel):
-    subject: Optional[str] = None
-    status: Optional[TicketStatus] = None
-    priority: Optional[TicketPriority] = None
-    assignee_id: Optional[int] = None
+    subject: str | None = None
+    status: TicketStatus | None = None
+    priority: TicketPriority | None = None
+    assignee_id: int | None = None
 
 
 class Ticket(TicketBase, TimeStampedSchema):
     customer: Customer
-    assignee: Optional[User] = None
+    assignee: User | None = None

@@ -1,6 +1,5 @@
 """Pydantic schemas for User data transfer."""
 
-from typing import Optional
 
 from pydantic import BaseModel, EmailStr
 
@@ -10,7 +9,7 @@ from app.models.user import RoleEnum
 
 class RoleBase(BaseModel):
     name: RoleEnum
-    description: Optional[str] = None
+    description: str | None = None
 
 
 class Role(TimeStampedSchema, RoleBase):
@@ -19,7 +18,7 @@ class Role(TimeStampedSchema, RoleBase):
 
 class UserBase(BaseModel):
     email: EmailStr
-    full_name: Optional[str] = None
+    full_name: str | None = None
 
 
 class UserCreate(UserBase):
@@ -28,9 +27,9 @@ class UserCreate(UserBase):
 
 
 class UserUpdate(BaseModel):
-    email: Optional[EmailStr] = None
-    full_name: Optional[str] = None
-    is_active: Optional[bool] = None
+    email: EmailStr | None = None
+    full_name: str | None = None
+    is_active: bool | None = None
 
 
 class User(TimeStampedSchema, UserBase):

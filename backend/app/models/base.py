@@ -1,6 +1,6 @@
 """Base class for all SQLAlchemy models."""
 
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Annotated
 
 from sqlalchemy import text

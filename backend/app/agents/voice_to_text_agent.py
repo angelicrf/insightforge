@@ -4,8 +4,9 @@ import io
 from typing import Any
 
 import httpx
-from openai import AsyncOpenAI
 import structlog
+from openai import AsyncOpenAI
+
 from app.config.settings import settings
 
 from .base_agent import BaseAgent

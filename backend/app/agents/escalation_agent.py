@@ -1,6 +1,7 @@
 """The Escalation Agent: For determining when human intervention is needed."""
 
 from typing import Any
+
 from .base_agent import BaseAgent
 from .shared_context import SharedContext
 

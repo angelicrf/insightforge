@@ -1,5 +1,7 @@
 """The Language Agent: For detecting the language of a ticket."""
 
+from typing import Any
+
 from .base_agent import BaseAgent
 from .shared_context import SharedContext
 

@@ -1,6 +1,5 @@
 """API endpoints for managing users."""
 
-from typing import List
 
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -15,17 +14,17 @@ router = APIRouter()
 @router.post("/", response_model=User, status_code=status.HTTP_201_CREATED)
 async def create_user(
     user_in: UserCreate,
-    db: AsyncSession = Depends(get_db),
+    db: AsyncSession = Depends(get_db),  # noqa: B008
 ) -> User:
     return await user_controller.create_user(db=db, user_in=user_in)
 
 
-@router.get("/", response_model=List[User])
+@router.get("/", response_model=list[User])
 async def get_all_users(
-    db: AsyncSession = Depends(get_db),
+    db: AsyncSession = Depends(get_db),  # noqa: B008
     skip: int = Query(0, ge=0),
     limit: int = Query(100, ge=1, le=100),
-) -> List[User]:
+) -> list[User]:
     """
     Retrieve all users with pagination.
     """

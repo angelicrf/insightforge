@@ -1,6 +1,7 @@
 """The Classification Agent: For understanding and categorizing tickets."""
 
 from typing import Any
+
 from .base_agent import BaseAgent
 from .shared_context import SharedContext
 

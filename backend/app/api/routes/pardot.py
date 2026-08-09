@@ -1,8 +1,8 @@
 """API endpoints for interacting with Salesforce Pardot."""
 
-from typing import Any, Dict
+from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException
 from httpx import HTTPStatusError
 
 from app.tools.salesforce_client import SalesforceTool
@@ -13,7 +13,7 @@ router = APIRouter()
 salesforce_tool = SalesforceTool()
 
 
-@router.get("/custom-fields", response_model=Dict[str, Any])
+@router.get("/custom-fields", response_model=dict[str, Any])
 async def get_pardot_custom_fields():
     """Retrieves custom fields from the Pardot API."""
     try:

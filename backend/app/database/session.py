@@ -1,13 +1,12 @@
 """Database session management."""
 
-from collections.abc import AsyncGenerator
 import os
+from collections.abc import AsyncGenerator
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+
+import structlog
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
-import structlog
-
-from app.config.settings import settings
 
 log = structlog.get_logger()
 from dotenv import load_dotenv

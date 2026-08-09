@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import pathlib
 import sys
 
@@ -11,23 +12,21 @@ if __package__ in (None, ""):
     if str(project_root) not in sys.path:
         sys.path.insert(0, str(project_root))
 
-import os
-from typing import Any, Dict
 import json
+import os
+from typing import Any
 
 import httpx
-from fastapi import APIRouter, Depends, HTTPException, Query
 import structlog
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import APIRouter, HTTPException, Query
 
 from app.config.settings import settings
-from app.database.session import get_db
 
 router = APIRouter()
 log = structlog.get_logger()
 
 
-def _load_cached_pkce_data() -> Dict[str, Any]:
+def _load_cached_pkce_data() -> dict[str, Any]:
     """Load the most recent PKCE values written by the dev launcher."""
     cache_file = settings.SALESFORCE_PKCE_CACHE_FILE
     if not os.path.exists(cache_file):
@@ -38,10 +37,16 @@ def _load_cached_pkce_data() -> Dict[str, Any]:
             data = json.load(f)
             if isinstance(data, dict):
                 return data
-    except (IOError, json.JSONDecodeError) as exc:
+    except (OSError, json.JSONDecodeError) as exc:
         log.warning("Failed to load PKCE cache.", error=str(exc), cache_file=cache_file)
 
     return {}
+
+
+def _cache_salesforce_token(token_data: dict[str, Any]) -> None:
+    """Write the Salesforce token cache to disk."""
+    with open(settings.SALESFORCE_TOKEN_FILE, "w", encoding="utf-8") as f:
+        json.dump(token_data, f)
 
 
 @router.get("/salesforce/oauth/callback")
@@ -49,7 +54,7 @@ def _load_cached_pkce_data() -> Dict[str, Any]:
 async def salesforce_oauth_callback(
     code: str = Query(..., description="Authorization code from Salesforce"),
     state: str | None = Query(None, description="OAuth state returned by Salesforce"),
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Handles the OAuth2 callback from Salesforce and exchanges the authorization
     code for an access token using the PKCE flow.
@@ -123,10 +128,9 @@ async def salesforce_oauth_callback(
 
     # For development, cache the token locally to avoid re-authenticating.
     try:
-        with open(settings.SALESFORCE_TOKEN_FILE, "w") as f:
-            json.dump(token_data, f)
+        await asyncio.to_thread(_cache_salesforce_token, token_data)
         log.info("Salesforce token cached locally.", file=settings.SALESFORCE_TOKEN_FILE)
-    except IOError as e:
+    except OSError as e:
         log.error("Failed to cache Salesforce token.", error=str(e))
 
     log.info("Successfully exchanged code for Salesforce access token.")

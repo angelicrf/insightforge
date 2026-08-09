@@ -1,7 +1,7 @@
 """Abstract base class for all agents."""
 
 from abc import ABC, abstractmethod
-from typing import List, Dict, Any
+from typing import Any
 
 from .shared_context import SharedContext
 

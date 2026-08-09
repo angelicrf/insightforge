@@ -1,11 +1,9 @@
 """A tool for interacting with the NeonDB API."""
 
-from typing import Any, Dict, List
+from typing import Any
 
 import httpx
 import structlog
-
-from app.config.settings import settings
 
 log = structlog.get_logger()
 
@@ -24,7 +22,7 @@ class NeonDBTool:
         self.headers = {"Authorization": f"Bearer {admin_token}"}
         log.info("NeonDB client initialized for internal API calls.")
 
-    async def list_tables(self) -> List[str]:
+    async def list_tables(self) -> list[str]:
         """Retrieves a list of all table names in the public schema."""
         url = f"{self.base_url}/api/v1/neoondb/tables"
         async with httpx.AsyncClient() as client:
@@ -36,7 +34,7 @@ class NeonDBTool:
                 log.error("Failed to list NeonDB tables.", error=str(e), response=e.response.text)
                 return [f"Error: {e.response.status_code} - {e.response.text}"]
 
-    async def get_table_data(self, table_name: str) -> Dict[str, Any]:
+    async def get_table_data(self, table_name: str) -> dict[str, Any]:
         """Fetches all rows from a specific table."""
         url = f"{self.base_url}/api/v1/neoondb/tables/{table_name}"
         async with httpx.AsyncClient() as client:

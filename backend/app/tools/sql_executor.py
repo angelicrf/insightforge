@@ -1,10 +1,10 @@
 """Read-only SQL execution helper."""
 
 import re
-from typing import Any, Dict, List
+from typing import Any
 
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 def is_read_only_sql(statement: str) -> bool:
@@ -12,7 +12,7 @@ def is_read_only_sql(statement: str) -> bool:
     return not bool(disallowed.search(statement))
 
 
-async def execute_read_only_sql(db: AsyncSession, statement: str) -> List[Dict[str, Any]]:
+async def execute_read_only_sql(db: AsyncSession, statement: str) -> list[dict[str, Any]]:
     if not is_read_only_sql(statement):
         raise ValueError("Only read-only SQL statements are allowed.")
 
